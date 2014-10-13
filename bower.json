@@ -1,0 +1,23 @@
+{
+  "name": "exp",
+  "version": "0.0.0",
+  "homepage": "https://github.com/tkachenko1503/gameExp",
+  "authors": [
+    "Sergey Tkachenko <re4thzdsq@gmail.com>"
+  ],
+  "description": "Flow clone game",
+  "main": "index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "Flow",
+    "game"
+  ],
+  "license": "GNU GENERAL PUBLIC LICENSE",
+  "dependencies": {
+    "threejs": "*",
+    "threex": "*",
+    "stats.js": "*"
+  }
+}

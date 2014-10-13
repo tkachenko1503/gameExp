@@ -1,0 +1,25 @@
+{
+  "name": "exp",
+  "version": "0.0.0",
+  "description": "web games",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tkachenko1503/gameExp.git"
+  },
+  "keywords": [
+    "games"
+  ],
+  "author": "tkachenko1503",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/tkachenko1503/gameExp/issues"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.8",
+    "gulp-sass": "~1.1.0"
+  }
+}
