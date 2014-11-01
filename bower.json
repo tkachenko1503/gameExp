@@ -16,7 +16,6 @@
   ],
   "license": "GNU GENERAL PUBLIC LICENSE",
   "dependencies": {
-    "threejs": "*",
     "threex": "*",
     "stats.js": "*"
   }
