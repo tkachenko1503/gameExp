@@ -15,12 +15,15 @@ var Material = new THREE.MeshBasicMaterial({color:0x0000FF}),
 var Cube = Backbone.Model.extend({
     defaults: {
         mesh: new THREE.Mesh( Geometry, Material ),
-        color: 0x404040
+        color: 0x404040,
+        x: 0,
+        y: 0
     },
 
-    initialize: function(x, y){
+    initialize: function(){
         var mesh = this.get('mesh');
-        mesh.position.set(x-0.5, y-0.5, 0);
+        mesh.material.color.setHex(this.get('color'));
+        mesh.position.set(this.get('x')-0.5, this.get('y')-0.5, 0);
 
         var edg =  new THREE.EdgesHelper( mesh, 0x000000 );
         edg.material.linewidth = 1;

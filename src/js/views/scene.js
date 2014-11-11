@@ -78,15 +78,13 @@ var Scene = Backbone.View.extend({
          */
         Game.scene.add( Game.gridHelper );
 
-        /**
-         * Test it
-         */
-        var Cube = require('../models/cube');
-        var cube = new Cube(2,2);
-        var cubeMesh = cube.get('mesh');
-        Game.scene.add( cubeMesh );
 
-        Game.scene.add( cube.get('edg') );
+        this.collection.each(function(cube) {
+            var cubeMesh = cube.get('mesh');
+            Game.scene.add(cubeMesh);
+
+            Game.scene.add(cube.get('edg'));
+        });
 
         /**
          * Listener for resize
