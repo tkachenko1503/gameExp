@@ -22,7 +22,7 @@ var Scene = Backbone.View.extend({
         raycaster: new THREE.Raycaster(),
         scene: new THREE.Scene(),
         stats: new Stats(),
-        camera: new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000),
+        camera: new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000),
         gridHelper: new THREE.GridHelper( 10, 1 ),
 
         runLoop: function animate(){
@@ -52,7 +52,7 @@ var Scene = Backbone.View.extend({
                 antialias		: true,	// to get smoother output
                 preserveDrawingBuffer	: true	// to allow screenshot
             });
-            Game.renderer.setClearColor( 0xBBBBBB, 1 );
+            Game.renderer.setClearColor( 0x4E4E4E, 1 );
         }else{
             Game.renderer = new THREE.CanvasRenderer();
         }
@@ -73,11 +73,6 @@ var Scene = Backbone.View.extend({
         Game.camera.position.set(0, 2, 10);
         Game.scene.add( Game.camera );
 
-        /**
-         * Set helper grid
-         */
-        Game.scene.add( Game.gridHelper );
-
 
         this.collection.each(function(cube) {
             var cubeMesh = cube.get('mesh');
@@ -85,6 +80,19 @@ var Scene = Backbone.View.extend({
 
             Game.scene.add(cube.get('edg'));
         });
+
+        Game.camera.position.x = this.collection.cameraOffset.x;
+        Game.camera.position.y = this.collection.cameraOffset.y;
+
+        /**
+         * Add light
+         */
+        var ambientLight = new THREE.AmbientLight(0x3690FF);
+        Game.scene.add(ambientLight);
+
+        var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(Game.camera.position.x, Game.camera.position.y, Game.camera.position.z).normalize();
+        Game.scene.add(directionalLight);
 
         /**
          * Listener for resize
