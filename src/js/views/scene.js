@@ -24,6 +24,7 @@ var Scene = Backbone.View.extend({
         stats: new Stats(),
         camera: new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000),
         gridHelper: new THREE.GridHelper( 10, 1 ),
+        mouse: new THREE.Vector2(),
 
         runLoop: function animate(){
 
@@ -39,6 +40,10 @@ var Scene = Backbone.View.extend({
             this.stats.update();
         }
     },
+
+    meshes: [],
+
+    current: null,
 
     initialize: function() {
         var Game = this.Game;
@@ -76,10 +81,11 @@ var Scene = Backbone.View.extend({
 
         this.collection.each(function(cube) {
             var cubeMesh = cube.get('mesh');
+            this.meshes.push(cubeMesh);
             Game.scene.add(cubeMesh);
 
             Game.scene.add(cube.get('edg'));
-        });
+        }, this);
 
         Game.camera.position.x = this.collection.cameraOffset.x;
         Game.camera.position.y = this.collection.cameraOffset.y;
@@ -91,7 +97,7 @@ var Scene = Backbone.View.extend({
         Game.scene.add(ambientLight);
 
         var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(Game.camera.position.x, Game.camera.position.y, Game.camera.position.z).normalize();
+        directionalLight.position.copy( Game.camera.position );
         Game.scene.add(directionalLight);
 
         /**
@@ -112,21 +118,22 @@ var Scene = Backbone.View.extend({
 
     onDocumentMouseMove: function( event ) {
         event.preventDefault();
-        //mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-        //mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-        //var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
-        //projector.unprojectVector( vector, camera );
-        //var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-        //
-        //var intersects = raycaster.intersectObjects( objects );
-        //if ( intersects.length > 0 ) {
-        //    INTERSECTED = intersects[ 0 ].object;
-        //    INTERSECTED.material.color.setHex( 0xff0000 );
-        //    container.style.cursor = 'pointer';
-        //} else {
-        //    INTERSECTED = null;
-        //    container.style.cursor = 'auto';
-        //}
+        this.Game.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        this.Game.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        var vector = new THREE.Vector3( this.Game.mouse.x, this.Game.mouse.y, 0.5 );
+        vector.unproject( this.Game.camera );
+        var raycaster = new THREE.Raycaster( this.Game.camera.position, vector.sub( this.Game.camera.position ).normalize() );
+
+        var intersects = raycaster.intersectObjects( this.meshes );
+        if ( intersects.length > 0 ) {
+            this.current = intersects[ 0 ].object;
+            //this.current.material.color.setHex( 0xff0000 );
+            this.current.rotateOnAxis( new THREE.Vector3( 0, this.Game.mouse.y, 0).normalize(), 0.05 )
+            //container.style.cursor = 'pointer';
+        } else {
+            this.current = null;
+            //container.style.cursor = 'auto';
+        }
     },
 
     onDocumentMouseDown: function( event ) {

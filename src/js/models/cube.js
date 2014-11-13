@@ -7,9 +7,6 @@ var underscore = require('underscore'),
     THREE = require('n3d-threejs');
 Backbone.$ = $;
 
-var Material = new THREE.MeshPhongMaterial({color:0x0000FF}),
-    Geometry = new THREE.BoxGeometry( 1, 1, 1 );
-
 
 // cube model
 var Cube = Backbone.Model.extend({
@@ -21,7 +18,10 @@ var Cube = Backbone.Model.extend({
     },
 
     initialize: function(){
-        var mesh = new THREE.Mesh( Geometry, Material );
+        var Material = new THREE.MeshPhongMaterial({color:0x0000FF}),
+            Geometry = new THREE.BoxGeometry( 1, 1, 1),
+            mesh = new THREE.Mesh( Geometry, Material );
+
         mesh.material.color.setHex(this.get('color'));
         mesh.position.set(this.get('x')+0.5, this.get('y')+0.5, -0.5);
         this.set('mesh', mesh);

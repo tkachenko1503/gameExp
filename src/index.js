@@ -22,13 +22,4 @@ $(function(){
     // init view
     var view = new mainView( {collection: mainColl} );
 
-//    //return square geometry
-//    function makeSquare(group, rows, cols){
-//
-
-//        //group = new THREE.Object3D();
-//        //scene.add( group );
-//        //
-//        //var offset = makeSquare(group, 4, 4);
-//        //group.position.x = -offset;
 });
