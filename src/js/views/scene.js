@@ -54,8 +54,8 @@ var Scene = Backbone.View.extend({
         if( Detector.webgl ){
             Game.renderer = new THREE.WebGLRenderer({
                 precision: 'highp',
-                antialias		: true,	// to get smoother output
-                preserveDrawingBuffer	: true	// to allow screenshot
+                antialias: true,	// to get smoother output
+                preserveDrawingBuffer: true	// to allow screenshot
             });
             Game.renderer.setClearColor( 0x4E4E4E, 1 );
         }else{
@@ -73,9 +73,14 @@ var Scene = Backbone.View.extend({
         document.body.appendChild( Game.stats.domElement );
 
         /**
+         * Set helper grid
+         */
+        //Game.scene.add( Game.gridHelper );
+
+        /**
          * Set camera
          */
-        Game.camera.position.set(0, 2, 10);
+        Game.camera.position.set(0, 2, 6);
         Game.scene.add( Game.camera );
 
 

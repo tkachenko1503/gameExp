@@ -18,7 +18,7 @@ var collection = Backbone.Collection.extend({
         var ci,
             ri;
 
-        var interval = 0.12,
+        var interval = 0.15,
             zero = {
                 x: 0,
                 y: 0
